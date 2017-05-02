@@ -19,4 +19,4 @@ In addition, this project will include:
 ### Wireframes
 This app will consist of a single screen with a visual keyboard, oscillator and filter controls, as well as volume nob. It will also include nav links to the GitHub, my LinkedIn, and the About Modal.
 
-![wireframes](https://github.com/appacademy/ny-portfolio-curriculum/blob/master/javascript-project/js-proposal-wireframe.jpg)
+![wireframes](https://github.com/jestir1234/synth-pal/blob/master/synth-pal.png)
