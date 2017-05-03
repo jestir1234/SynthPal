@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Add sound to your web app</title>
+        <link rel="stylesheet" href="styles/main.css">
+        <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Synthesizer!</h1>
+
+            <div class="synth-container">
+
+              <ul class="set">
+                <li id="keyA" class="white f">A</li>
+                <li id="keyW" class="black fs">W</li>
+                <li id="keyS" class="white g">S</li>
+                <li id="keyE" class="black gs">E</li>
+                <li id="keyD" class="white a">D</li>
+                <li id="keyR" class="black as">R</li>
+                <li id="keyF" class="white d">F</li>
+                <li id="keyG" class="white c">G</li>
+                	<li id="keyY" class="black cs">Y</li>
+              	  <li id="keyH" class="white d">H</li>
+              	  <li id="keyU" class="black ds">U</li>
+              	  <li id="keyJ" class="white e">J</li>
+              </ul>
+
+              <select id="oscillator1Type">
+                <<option value="sine">Sine</option>
+                <<option value="square">Square</option>
+                <<option value="triangle">Triangle</option>
+                <<option value="sawtooth">Sawtooth</option>
+              </select>
+
+              <select id="oscillator2Type">
+                <<option value="sine">Sine</option>
+                <<option value="square">Square</option>
+                <<option value="triangle">Triangle</option>
+                <<option value="sawtooth">Sawtooth</option>
+              </select>
+            </div>
+        </div>
+
+        <script src="synth.js"></script>
+    </body>
+</html>
