@@ -24,18 +24,13 @@
                   <div id="slider"></div>
                 </div>
 
-                <div class="delay-wet-container">
-                  <h3>Wetness</h3>
+                <div class="delay-feedback-container">
+                  <h3>Feedback</h3>
                   <div id="slider"></div>
                 </div>
 
-                <div class="delay-dry-container">
-                  <h3>Dryness</h3>
-                  <div id="slider"></div>
-                </div>
-
-                <div class="delay-cutoff-container">
-                  <h3>Cutoff</h3>
+                <div class="delay-mix-container">
+                  <h3>Mix</h3>
                   <div id="slider"></div>
                 </div>
 
@@ -72,12 +67,16 @@
               </select>
             </div>
 
-            <div class="chorus-container">
-              <label for="chorus">Chorus</label>
-              <label for="rate">Rate</label>
-              <input id="rate" type='range' min="0" max="8" defaultValue="0"/>
-              <label for="delay">Delay</label>
-              <input id="delay" type='range' min="0" max="1000" defaultValue="0"/>
+            <div class="flanger-container">
+              <h3>Flanger</h3>
+              <label for="time">Time</label>
+              <input id="time" type='range' min="0" max="100" value="0"/>
+              <label for="speed">Speed</label>
+              <input id="speed" type='range' min="0" max="100" value="0"/>
+              <label for="depth">Depth</label>
+              <input id="depth" type='range' min="0" max="100" value="0"/>
+              <label for="mix">Mix</label>
+              <input id="mix" type='range' min="0" max="100" value="0"/>
             </div>
 
             <div class="lowpass-container">
@@ -92,6 +91,11 @@
               <label for="">Intensity</label>
               <input id="intensity" type="range" min="0" max="100" value="30">
 
+            </div>
+
+            <div class="pitch-container">
+              <label for="pitch">Pitch</label>
+              <input id="pitch" type="range" min="-100" max="100" value="0">
             </div>
 
 

@@ -158,25 +158,20 @@ h2{
   align-items: center;
 }
 
-.delay-btns-container .delay-wet-container{
+.delay-btns-container .delay-feedback-container{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.delay-btns-container .delay-dry-container{
+.delay-btns-container .delay-mix-container{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.delay-btns-container .delay-cutoff-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.chorus-container{
+.flanger-container{
   display: flex;
   flex-direction: column;
   align-items: center;
