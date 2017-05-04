@@ -80,6 +80,20 @@
               <input id="delay" type='range' min="0" max="1000" defaultValue="0"/>
             </div>
 
+            <div class="lowpass-container">
+              <label for="lowpass">Lowpass Filter</lable>
+
+              <label for="frequency">Frequency</label>
+                <input id="frequency" type="range" min="0" max="22050" value="200"/>
+            </div>
+
+            <div class="tremelo-container">
+              <label for="tremolo">Tremelo</label>
+              <label for="">Intensity</label>
+              <input id="intensity" type="range" min="0" max="100" value="30">
+
+            </div>
+
 
               <ul class="set">
                 <li id="keyA" class="white f">A</li>
@@ -103,5 +117,6 @@
         <script src="tuna.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.roundslider/1.3/roundslider.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.1/Pizzicato.js"></script>
     </body>
 </html>

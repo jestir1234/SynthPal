@@ -4,7 +4,17 @@ $(document).ready(function(){
   let context = new AudioContext();
   let oscillators = {};
   let notes = {};
+  let playedSounds = {};
+  // let currentSounds = [];
   let tuna = new Tuna(context);
+  let masterGain = context.createGain();
+  // let chorusGain = context.createGain();
+  // let delayGain = context.createGain();
+  // let filterGain = context.createGain();
+  // let tremeloGain = context.createGain();
+  // let biquadFilter = context.createBiquadFilter();
+  let delay;
+
 
   $(".delay-time-container #slider").roundSlider({
     width:10,
@@ -30,31 +40,71 @@ $(document).ready(function(){
     max:22050
   });
 
-  let $delaySlider = $(".delay-container #slider");
-  let value = $delaySlider.data("roundSlider");
 
-  $delaySlider.change(() => console.log(value.option("value")));
+//   const addChorus = (rate, delay) => {
+//     return new tuna.Chorus({
+//       rate: rate,
+//       feedback: 0.2,
+//       delay: delay,
+//       bypass: 0
+//     });
+//   }
+//
+//   const addDelay = (delayTime, wetLevel, dryLevel, cutoff) => {
+//     return new tuna.Delay({
+//     feedback: 0.45,
+//     delayTime: delayTime,
+//     wetLevel: wetLevel,
+//     dryLevel: dryLevel,
+//     cutoff: cutoff,
+//     bypass: 0
+//   })
+// };
+//
+// const addLowPassFilter = (frequency, lowpass) => {
+//   return new tuna.Filter({
+//     frequency: frequency, //20 to 22050
+//     Q: 20, //0.001 to 100
+//     gain: 10, //-40 to 40 (in decibels)
+//     filterType: lowpass, //highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
+//     bypass: 0
+//   })
+// }
+//
+// const addTremelo = (intensity) => {
+//   return new tuna.Overdrive({
+//     outputGain: 0.5,         //0 to 1+
+//     drive: 0.7,              //0 to 1
+//     curveAmount: 1,          //0 to 1
+//     algorithmIndex: 0,       //0 to 5, selects one of our drive algorithms
+//     bypass: 0
+// });
+// }
 
-  const addChorus = (rate, delay) => {
-    return new tuna.Chorus({
-      rate: rate,
-      feedback: 0.2,
-      delay: delay,
-      bypass: 0
-    });
-  }
 
-  const addDelay = (delayTime, wetLevel, dryLevel, cutoff) => {
-    return new tuna.Delay({
-    feedback: 0.45,
-    delayTime: delayTime,
-    wetLevel: wetLevel,
-    dryLevel: dryLevel,
-    cutoff: cutoff,
-    bypass: 0
-  })
-};
+// const applyFilter = () => {
 
+// }
+//
+// $('.lowpass-container #frequency').change(applyFilter)
+
+
+const applyDelayTime = () => {
+  let delayTime = $('.delay-time-container #slider').data('roundSlider').option("value") / 1;
+
+  delay = new Pizzicato.Effects.Delay({
+    feedback: 0.6,
+    time: delayTime,
+    mix: 0.5
+  });
+  let sounds = Object.values(playedSounds);
+
+  sounds.forEach((sound) => {
+    sound.addEffect(delay);
+  });
+}
+
+$(".delay-time-container #slider").change(applyDelayTime);
 
   let keyA = document.getElementById('keyA');
   let $keyA = $(keyA);
@@ -118,7 +168,8 @@ $(document).ready(function(){
       let chorus = addChorus(rate, delay);
 
       this.masterVolume.connect(chorus);
-      chorus.connect(context.destination);
+      chorus.connect(masterGain);
+      // chorusGain.connect(masterGain);
     }
 
     applyDelay(){
@@ -128,15 +179,47 @@ $(document).ready(function(){
       let cutoff = $('.delay-cutoff-container #slider').data('roundSlider').option("value") / 1;
 
       let delayEffect = addDelay(delayTime, wetLevel, dryLevel, cutoff);
+
       this.masterVolume.connect(delayEffect);
-      delayEffect.connect(context.destination);
+      delayEffect.connect(masterGain);
+      // delayGain.connect(masterGain);
     }
+
+    applyLowPassFilter(){
+       let frequency = $('.lowpass-container #frequency')[0].value
+       let filterEffect = addLowPassFilter(frequency, "lowpass");
+
+       this.masterVolume.connect(filterEffect);
+       filterEffect.connect(filterGain);
+       filterGain.connect(masterGain);
+    }
+
+    applyHighPassFilter(){
+       let frequency = $('.lowpass-container #frequency')[0].value;
+       let filterEffect = addLowPassFilter(frequency, "highpass");
+
+       this.masterVolume.connect(filterEffect);
+       filterEffect.connect(filterGain);
+       filterGain.connect(masterGain);
+    }
+
+    applyTremelo(){
+      let intensity = $('.tremelo-container #intensity')[0].value / 100;
+      let tremeloEffect = addTremelo(intensity);
+
+      this.masterVolume.connect(tremeloEffect);
+      tremeloEffect.connect(tremeloGain);
+      tremeloGain.connect(masterGain);
+    }
+
 
     play(note, frequency, effects){
       this.masterVolume = context.createGain();
-      let finalSound = this.masterVolume;
+      //
       this.applyChorus();
-      this.applyDelay();
+      // this.applyDelay();
+      // this.applyLowPassFilter();
+      // this.applyTremelo();
 
       this.osc.frequency.value = calcOctave(frequency, this.octave)
       this.osc.type = $("#oscillator1Type").val();
@@ -147,7 +230,9 @@ $(document).ready(function(){
       this.osc.connect(this.masterVolume);
       this.osc2.connect(this.masterVolume);
 
-      finalSound.connect(context.destination);
+      this.masterVolume.connect(masterGain);
+
+      masterGain.connect(context.destination);
 
       oscillators[frequency] = [this.osc, this.osc2];
 
@@ -160,17 +245,32 @@ $(document).ready(function(){
   const keyDown = (note, frequency) => {
     if(notes[note] === "down") return;
     notes[note] = "down";
-    let sound = new Sound(context);
-    let effects = {};
 
-    sound.play(note, frequency, effects);
+    // let sound = new Sound(context);
+    // let effects = {};
+    // currentSounds.push(sound);
+    // sound.play(note, frequency, effects);
+
+    // Pizzicato sounds Use one or the other
+    let oscillator1Type = $("#oscillator1Type").val();
+    let sound = new Pizzicato.Sound({
+      source: 'wave',
+      options: {
+        type: oscillator1Type,
+        frequency: frequency
+      }
+    });
+    playedSounds[note] = sound;
+    sound.play();
   }
 
   const keyUp = (note, frequency) => {
     notes[note] = "up";
-    oscillators[frequency].forEach((oscillator) => {
-      oscillator.stop(context.currentTime);
-    });
+    // oscillators[frequency].forEach((oscillator) => {
+    //   oscillator.stop(context.currentTime);
+    // });
+
+    playedSounds[note].stop();
   }
 
   $(window).bind('keypress', (e) => {
