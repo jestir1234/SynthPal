@@ -1,3 +1,7 @@
+h3 {
+  color:white;
+}
+
 .container {
   margin: auto;
   width: 800px;
@@ -5,7 +9,8 @@
 
 .synth-container{
   border: 1px solid red;
-  height: 500px;
+  display:flex;
+  flex-wrap: wrap;
 }
 
 { box-sizing:border-box; }
@@ -19,15 +24,16 @@ ul {
 	height:18.875em; width:34em;
   margin:5em auto; padding:3em 0 0 3em; position:relative;
   border:1px solid #160801; border-radius:1em;
-  background:-webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url('http://f.cl.ly/items/2q1f3t0C3R1b0g081w3n/vwood.png');
-box-shadow:0 0 50px rgba(0,0,0,0.5) inset, 0 1px rgba(212,152,125,0.2) inset,0 5px 15px rgba(0,0,0,0.5); }
+  background:-webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url('https://designmodo.com/wp-content/uploads/2011/11/Wood-Textures-1.jpg');
+  box-shadow:0 0 50px rgba(0,0,0,0.5) inset, 0 1px rgba(212,152,125,0.2) inset,0 5px 15px rgba(0,0,0,0.5);
+  display: flex;
+}
 
 li {
   margin:0;
   padding:0;
   list-style: none;
   position:relative;
-  float:left;
 }
 
 ul .white {
@@ -39,13 +45,13 @@ ul .white {
 	background: white;
 }
 
-ul .white:active {
+/*ul .white:active {
 	border-top:1px solid #777;
 	border-left:1px solid #999;
 	border-bottom:1px solid #999;
 	box-shadow:2px 0 3px rgba(0,0,0,0.1) inset, -5px 5px 20px rgba(0,0,0,0.2) inset,0 0 3px rgba(0,0,0,0.2);
 	background: linear-gradient(top, #fff 0%,#e9e9e9 100%);
-}
+}*/
 
 .black {
 	height:8em; width:2em; margin:0 0 0 -1em; z-index:2;
@@ -60,7 +66,10 @@ ul .white:active {
 	background:linear-gradient(left, #444 0%,#222 100%);
 }
 
-.a,.g,.d,.e { margin:0 0 0 -1em;  }
+/*.e { margin:0 0 0 -1em;  }*/
+.g,.a,.e,.b,.d {
+margin: 0 0 0 -1em;
+}
 
 ul li:first-child {
   border-radius: 5px 0 5px 5px;
@@ -79,18 +88,105 @@ ul li {
 
 .white-active{
   height:16em; width:4em; z-index:1;
-  background: yellow;
+	background: white;
   border-top:1px solid #777;
-	border-left:1px solid #999;
-  border-bottom:1px solid #bbb;*/
-  border-radius:0 0 5px 5px;*/
+  border-left:1px solid #999;
+  border-bottom:1px solid #999;
   box-shadow:2px 0 3px rgba(0,0,0,0.1) inset, -5px 5px 20px rgba(0,0,0,0.2) inset,0 0 3px rgba(0,0,0,0.2);
+  /*background: linear-gradient(top, #fff 0%,#e9e9e9 100%);*/
+}
+
+.white-active-margin{
+  height:16em; width:4em; z-index:1;
+	background: white;
+  margin: 0 0 0 -1em;
+  border-top:1px solid #777;
+  border-left:1px solid #999;
+  border-bottom:1px solid #999;
+  box-shadow:2px 0 3px rgba(0,0,0,0.1) inset, -5px 5px 20px rgba(0,0,0,0.2) inset,0 0 3px rgba(0,0,0,0.2);
+  /*background: linear-gradient(top, #fff 0%,#e9e9e9 100%);*/
 }
 
 .black-active {
   height:8em; width:2em; margin:0 0 0 -1em; z-index:2;
-  background: yellow;
+  background: linear-gradient(45deg, black 0%,#111 100%);
   border:1px solid #000;
   border-radius:0 0 3px 3px;
-  box-shadow:-1px -1px 2px rgba(255,255,255,0.2) inset, 0 -5px 2px 3px rgba(0,0,0,0.6) inset, 0 2px 4px rgba(0,0,0,0.5);
+  border-bottom: 1px solid black;
+  box-shadow:-2px 0px 3px rgba(255,255,255,0.2) inset, 0 -5px 2px 3px rgba(0,0,0,0.6) inset, 0 2px 4px rgba(0,0,0,0.5);
+}
+
+label{
+  color: white;
+}
+
+.delay-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  border: 1px solid yellow;
+}
+
+.delay-container select{
+  width: 25%;
+}
+
+.delay-container #slider .rs-block{
+    background:-webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url('https://designmodo.com/wp-content/uploads/2011/11/Wood-Textures-9.jpg');
+}
+
+.delay-container #slider .rs-block .rs-inner{
+  background:-webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url('http://inspiredgolfing.com/wp-content/uploads/2013/01/brushed-metal-background-3-1024x949.jpg');
+}
+
+h1{
+  color:white;
+}
+
+h2{
+  color:white;
+}
+
+.delay-btns-container{
+  display: flex;
+}
+
+.delay-btns-container .delay-time-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delay-btns-container .delay-wet-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delay-btns-container .delay-dry-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delay-btns-container .delay-cutoff-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chorus-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid green;
+}
+
+.oscillator-container{
+  border: 1px solid red;
+}
+
+.octave-container{
+  border: 1px solid pink;
 }

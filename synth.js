@@ -1,11 +1,60 @@
+
 $(document).ready(function(){
 
   let context = new AudioContext();
   let oscillators = {};
+  let notes = {};
+  let tuna = new Tuna(context);
 
-  let masterVolume = context.createGain();
-  masterVolume.gain.value = 0.3;
-  masterVolume.connect(context.destination);
+  $(".delay-time-container #slider").roundSlider({
+    width:10,
+    radius: 50,
+    max:10000
+  });
+
+  $(".delay-wet-container #slider").roundSlider({
+    width:10,
+    radius: 40,
+    max:100
+  });
+
+  $(".delay-dry-container #slider").roundSlider({
+    width:10,
+    radius: 40,
+    max:100
+  });
+
+  $(".delay-cutoff-container #slider").roundSlider({
+    width:10,
+    radius: 50,
+    max:22050
+  });
+
+  let $delaySlider = $(".delay-container #slider");
+  let value = $delaySlider.data("roundSlider");
+
+  $delaySlider.change(() => console.log(value.option("value")));
+
+  const addChorus = (rate, delay) => {
+    return new tuna.Chorus({
+      rate: rate,
+      feedback: 0.2,
+      delay: delay,
+      bypass: 0
+    });
+  }
+
+  const addDelay = (delayTime, wetLevel, dryLevel, cutoff) => {
+    return new tuna.Delay({
+    feedback: 0.45,
+    delayTime: delayTime,
+    wetLevel: wetLevel,
+    dryLevel: dryLevel,
+    cutoff: cutoff,
+    bypass: 0
+  })
+};
+
 
   let keyA = document.getElementById('keyA');
   let $keyA = $(keyA);
@@ -32,29 +81,93 @@ $(document).ready(function(){
   let keyJ = document.getElementById('keyJ');
   let $keyJ = $(keyJ);
 
+  const calcOctave = (frequency, val) => {
+
+    switch(val){
+      case 0:
+        return frequency * 1;
+      case 1:
+        return frequency * 2;
+      case 2:
+        return (frequency * 2) * 2;
+      case 3:
+        return ((frequency * 2) * 2) * 2;
+      case -1:
+        return frequency / 2;
+      case -2:
+        return (frequency / 2) / 2;
+      case -3:
+        return ((frequency / 2) / 2) / 2;
+      default:
+        return frequency;
+    }
+  }
+
+  class Sound {
+    constructor(context){
+      this.context = context;
+      this.osc = context.createOscillator();
+      this.osc2 = context.createOscillator();
+      this.octave = parseInt($('#octave').val());
+      this.masterVolume;
+    }
+
+    applyChorus(){
+      let rate = $('.chorus-container #rate')[0].value;
+      let delay = $('.chorus-container #delay')[0].value / 1000;
+      let chorus = addChorus(rate, delay);
+
+      this.masterVolume.connect(chorus);
+      chorus.connect(context.destination);
+    }
+
+    applyDelay(){
+      let delayTime = $('.delay-time-container #slider').data('roundSlider').option("value") / 1;
+      let wetLevel = $('.delay-wet-container #slider').data('roundSlider').option("value") / 100;
+      let dryLevel = $('.delay-dry-container #slider').data('roundSlider').option("value") / 100;
+      let cutoff = $('.delay-cutoff-container #slider').data('roundSlider').option("value") / 1;
+
+      let delayEffect = addDelay(delayTime, wetLevel, dryLevel, cutoff);
+      this.masterVolume.connect(delayEffect);
+      delayEffect.connect(context.destination);
+    }
+
+    play(note, frequency, effects){
+      this.masterVolume = context.createGain();
+      let finalSound = this.masterVolume;
+      this.applyChorus();
+      this.applyDelay();
+
+      this.osc.frequency.value = calcOctave(frequency, this.octave)
+      this.osc.type = $("#oscillator1Type").val();
+
+      this.osc2.frequency.value = calcOctave(frequency, this.octave)
+      this.osc2.type = $("#oscillator2Type").val();
+
+      this.osc.connect(this.masterVolume);
+      this.osc2.connect(this.masterVolume);
+
+      finalSound.connect(context.destination);
+
+      oscillators[frequency] = [this.osc, this.osc2];
+
+      this.osc.start(context.currentTime);
+      this.osc2.start(context.currentTime);
+    }
+  }
+
 
   const keyDown = (note, frequency) => {
-    let osc = context.createOscillator();
-    let osc2 = context.createOscillator();
+    if(notes[note] === "down") return;
+    notes[note] = "down";
+    let sound = new Sound(context);
+    let effects = {};
 
-    osc.frequency.value = frequency;
-    osc.type = $("#oscillator1Type").val();
-
-    osc2.frequency.value = frequency;
-    osc2.type = $("#oscillator2Type").val();
-
-    osc.connect(masterVolume);
-    osc2.connect(masterVolume);
-
-    masterVolume.connect(context.destination);
-
-    oscillators[frequency] = [osc, osc2];
-
-    osc.start(context.currentTime);
-    osc2.start(context.currentTime);
+    sound.play(note, frequency, effects);
   }
 
   const keyUp = (note, frequency) => {
+    notes[note] = "up";
     oscillators[frequency].forEach((oscillator) => {
       oscillator.stop(context.currentTime);
     });
@@ -70,19 +183,19 @@ $(document).ready(function(){
       $keyW[0].setAttribute("class", "black-active")
       keyDown("fs", 739.99);
     } else if (key === 115){
-      $keyS[0].setAttribute("class", "white-active")
+      $keyS[0].setAttribute("class", "white-active-margin")
       keyDown("g", 783.99);
     } else if (key === 101) {
       $keyE[0].setAttribute("class", "black-active")
       keyDown("gs", 830.61);
     } else if (key === 100){
-      $keyD[0].setAttribute("class", "white-active")
+      $keyD[0].setAttribute("class", "white-active-margin")
       keyDown("a", 880.00);
     } else if (key === 114){
       $keyR[0].setAttribute("class", "black-active")
       keyDown("as", 932.33);
     } else if (key === 102){
-      $keyF[0].setAttribute("class", "white-active")
+      $keyF[0].setAttribute("class", "white-active-margin")
       keyDown("b", 987.77);
     } else if (key === 103){
       $keyG[0].setAttribute("class", "white-active")
@@ -91,22 +204,22 @@ $(document).ready(function(){
       $keyY[0].setAttribute("class", "black-active")
       keyDown("cs", 1108.73);
     } else if (key === 104){
-      $keyH[0].setAttribute("class", "white-active")
+      $keyH[0].setAttribute("class", "white-active-margin")
       keyDown("d", 1174.66);
     } else if (key === 117){
       $keyU[0].setAttribute("class", "black-active")
       keyDown("ds", 1244.51);
     } else if (key === 106){
-      $keyJ[0].setAttribute("class", "white-active")
+      $keyJ[0].setAttribute("class", "white-active-margin")
       keyDown("e", 1318.51);
     }
   });
 
   $(window).bind('keyup', (e) => {
-    
+
     let key = e.keyCode || e.which;
     if (key === 65) {
-      $keyA[0].setAttribute("class", "white b")
+      $keyA[0].setAttribute("class", "white f")
       keyUp("f", 698.46)
     } else if (key === 87){
       $keyW[0].setAttribute("class", "black fs")
@@ -124,7 +237,7 @@ $(document).ready(function(){
       $keyR[0].setAttribute("class", "black as")
       keyUp("as", 932.33);
     } else if (key === 70){
-      $keyF[0].setAttribute("class", "white d")
+      $keyF[0].setAttribute("class", "white b")
       keyUp("b", 987.77	);
     } else if (key === 71){
       $keyG[0].setAttribute("class", "white c")
