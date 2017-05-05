@@ -12,9 +12,9 @@ $(document).ready(function(){
   let originalFreq3 = {};
   let currentEffects = {};
   let currentOctave = 0;
-  let osc1Array = ["sine", "square", "triangle", "sawtooth"];
-  let osc2Array = ["sine", "square", "triangle", "sawtooth"];
-  let osc3Array = ["sine", "square", "triangle", "sawtooth"];
+  let osc1Array = ["sine", "square", "triangle", "s-tooth"];
+  let osc2Array = ["sine", "square", "triangle", "s-tooth"];
+  let osc3Array = ["sine", "square", "triangle", "s-tooth"];
 
   let masterGain = context.createGain();
   let delay;
