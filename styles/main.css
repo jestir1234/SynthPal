@@ -680,3 +680,80 @@ p a:hover {
   cursor: pointer;
   transform: scale(.8);
 }
+
+.up-arrow-btn{
+  /*border: 1px solid red;*/
+  margin-bottom: 5px;
+  height:20px;
+  width: 40px;
+  background: #f8c6cf;
+  border-radius: .2em;
+  -webkit-box-shadow: 0 10px 6px -6px #222;
+     -moz-box-shadow: 0 10px 6px -6px #222;
+          box-shadow: 0 10px 6px -6px #222;
+}
+.down-arrow-btn{
+  /*border: 1px solid red;*/
+  margin-top: 2px;
+  height:20px;
+  width: 40px;
+  background: #f8c6cf;
+  border-radius: .2em;
+  -webkit-box-shadow: 0 10px 6px -6px #222;
+	   -moz-box-shadow: 0 10px 6px -6px #222;
+	        box-shadow: 0 10px 6px -6px #222;
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid black;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid black;
+}
+
+.arrow-up:hover{
+  border-bottom: 20px solid #872727;
+  cursor: pointer;
+}
+
+.arrow-down:hover{
+  border-top: 20px solid #872727;
+  cursor: pointer;
+}
+
+.arrow-up:active{
+  transform: scale(.9);
+}
+
+.arrow-down:active{
+  transform: scale(.9);
+}
+
+.oscillator1-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.oscillator2-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.oscillator3-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.osc1-display{
+
+}

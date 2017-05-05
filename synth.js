@@ -11,9 +11,10 @@ $(document).ready(function(){
   let originalFreq2 = {};
   let originalFreq3 = {};
   let currentEffects = {};
-  let lowPassFilter;
-  let highPassFilter;
   let currentOctave = 0;
+  let osc1Array = ["sine", "square", "triangle", "sawtooth"];
+  let osc2Array = ["sine", "square", "triangle", "sawtooth"];
+  let osc3Array = ["sine", "square", "triangle", "sawtooth"];
 
   let masterGain = context.createGain();
   let delay;
@@ -58,6 +59,53 @@ $(document).ready(function(){
     max:100 // 0 to 1
   });
 
+const setOscDisplays = () => {
+  $('.osc1-display')[0].innerHTML = osc1Array[0].charAt(0).toUpperCase() + osc1Array[0].slice(1)
+  $('.osc2-display')[0].innerHTML = osc2Array[0].charAt(0).toUpperCase() + osc2Array[0].slice(1)
+  $('.osc3-display')[0].innerHTML = osc3Array[0].charAt(0).toUpperCase() + osc3Array[0].slice(1)
+}
+
+$('.oscillator1-container .arrow-up').on("click", (e) => {
+  let first = osc1Array[0];
+  osc1Array.shift();
+  osc1Array.push(first);
+  setOscDisplays();
+});
+
+$('.oscillator2-container .arrow-up').on("click", (e) => {
+  let first = osc2Array[0];
+  osc2Array.shift();
+  osc2Array.push(first);
+  setOscDisplays();
+});
+
+$('.oscillator3-container .arrow-up').on("click", (e) => {
+  let first = osc3Array[0];
+  osc3Array.shift();
+  osc3Array.push(first);
+  setOscDisplays();
+});
+
+$('.oscillator1-container .arrow-down').on("click", (e) => {
+  let last = osc1Array[osc1Array.length - 1];
+  osc1Array.pop();
+  osc1Array.unshift(last);
+  setOscDisplays();
+});
+
+$('.oscillator2-container .arrow-down').on("click", (e) => {
+  let last = osc2Array[osc2Array.length - 1];
+  osc2Array.pop();
+  osc2Array.unshift(last);
+  setOscDisplays();
+});
+
+$('.oscillator3-container .arrow-down').on("click", (e) => {
+  let last = osc3Array[osc3Array.length - 1];
+  osc3Array.pop();
+  osc3Array.unshift(last);
+  setOscDisplays();
+});
 const applyTremelo = (sound) => {
   let speed = $('.tremelo-container #speed')[0].value;
   let depth = $('.tremelo-container #depth')[0].value / 100;
@@ -244,7 +292,7 @@ $(".volume-container input").on("input", updateVolume);
     let sound = new Pizzicato.Sound({
       source: 'wave',
       options: {
-        type: oscillator1Type,
+        type: osc1Array[0],
         frequency: frequency
       }
     });
@@ -253,7 +301,7 @@ $(".volume-container input").on("input", updateVolume);
     let sound2 = new Pizzicato.Sound({
       source: 'wave',
       options: {
-        type: oscillator2Type,
+        type: osc2Array[0],
         frequency: frequency
       }
     });
@@ -262,7 +310,7 @@ $(".volume-container input").on("input", updateVolume);
     let sound3 = new Pizzicato.Sound({
       source: 'wave',
       options: {
-        type: oscillator3Type,
+        type: osc3Array[0],
         frequency: frequency
       }
     });
