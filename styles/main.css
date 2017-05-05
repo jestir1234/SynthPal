@@ -221,6 +221,7 @@ h2{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-left: 5%;
 }
 
@@ -627,4 +628,55 @@ p a:hover {
   justify-content: center;
   align-items: center;
   border-radius: 0.5em;
+  width: 100%;
+}
+
+.up-btn-container{
+  height: 30px;
+  border-radius: .5em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 60px;
+  background: #f8c6cf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+}
+
+.down-btn-container{
+  height: 30px;
+  border-radius: .5em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 60px;
+  background: #f8c6cf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+}
+
+.down-btn-container:hover{
+  background: #ffd1dc;
+  cursor: pointer;
+  transform: scale(.9);
+}
+
+.down-btn-container:active{
+  background: #ffd1dc;
+  cursor: pointer;
+  transform: scale(.8);
+}
+
+.up-btn-container:hover{
+  background: #ffd1dc;
+  cursor: pointer;
+  transform: scale(.9);
+}
+
+.up-btn-container:active{
+  background: #ffd1dc;
+  cursor: pointer;
+  transform: scale(.8);
 }

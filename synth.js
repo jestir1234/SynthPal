@@ -13,12 +13,32 @@ $(document).ready(function(){
   let currentEffects = {};
   let lowPassFilter;
   let highPassFilter;
+  let currentOctave = 0;
 
   let masterGain = context.createGain();
   let delay;
   let flanger;
   let tremelo;
 
+  let octaveUp = $('.up-btn-container');
+  let octaveDown = $('.down-btn-container');
+  let octaveDisplay = $('.octave-display-container')[0];
+
+  octaveUp.on("click", () => changeCurrentOctave(1));
+  octaveDown.on("click", () => changeCurrentOctave(-1));
+
+
+  const changeCurrentOctave = (value) => {
+
+    if (currentOctave < 3 && currentOctave > -3) {
+      currentOctave += value;
+    } else if (currentOctave === 3 && value < 0){
+      currentOctave += value;
+    } else if (currentOctave === -3 && value > 0){
+      currentOctave += value;
+    }
+    octaveDisplay.innerHTML = currentOctave;
+  }
 
   $(".delay-time-container #slider").roundSlider({
     width:10,
@@ -86,7 +106,7 @@ const applyDelay = (sound) => {
 }
 
 const applyOctave = (sound) => {
-  let val = parseInt($('.octave-container #octave')[0].value);
+  let val = currentOctave;
   newFrequency = calcOctave(sound.frequency, val);
   sound.frequency = newFrequency;
 }
@@ -134,7 +154,6 @@ const updateVolume = () => {
   let notes2 = Object.keys(playedSounds2);
   let notes3 = Object.keys(playedSounds3);
 
-  console.log(val);
   notes.forEach((note) => {
     playedSounds[note].volume = val;
   })
