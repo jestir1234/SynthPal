@@ -14,7 +14,6 @@ $(document).ready(function(){
   let lowPassFilter;
   let highPassFilter;
 
-  let tuna = new Tuna(context);
   let masterGain = context.createGain();
   let delay;
   let flanger;
