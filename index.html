@@ -7,30 +7,35 @@
         <link href="https://cdn.jsdelivr.net/jquery.roundslider/1.3/roundslider.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="styles/main.css">
         <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     </head>
     <body>
         <div class="container">
-            <h1>Synthesizer!</h1>
 
-            <div class="synth-container">
+          <div class="title-container">
+            <h1>SynthPal!</h1>
+          </div>
 
+        <div class="synth-container">
+
+          <div class="delay-oscillators-container">
             <div class="delay-container">
               <h2>Delay</h2>
 
               <div class="delay-btns-container">
 
                 <div class="delay-time-container">
-                  <h3>Delay Time</h3>
+                  <h4>Delay Time</h4>
                   <div id="slider"></div>
                 </div>
 
                 <div class="delay-feedback-container">
-                  <h3>Feedback</h3>
+                  <h4>Feedback</h4>
                   <div id="slider"></div>
                 </div>
 
                 <div class="delay-mix-container">
-                  <h3>Mix</h3>
+                  <h4>Mix</h4>
                   <div id="slider"></div>
                 </div>
 
@@ -39,33 +44,25 @@
 
             <div class="oscillator-container">
               <h3>Oscillator Selector</h3>
-              <select id="oscillator1Type">
-                <<option value="sine">Sine</option>
-                <<option value="square">Square</option>
-                <<option value="triangle">Triangle</option>
-                <<option value="sawtooth">Sawtooth</option>
-              </select>
+              <div class="oscillators">
+                <select id="oscillator1Type">
+                  <<option value="sine">Sine</option>
+                  <<option value="square">Square</option>
+                  <<option value="triangle">Triangle</option>
+                  <<option value="sawtooth">Sawtooth</option>
+                </select>
 
-              <select id="oscillator2Type">
-                <<option value="sine">Sine</option>
-                <<option value="square">Square</option>
-                <<option value="triangle">Triangle</option>
-                <<option value="sawtooth">Sawtooth</option>
-              </select>
+                <select id="oscillator2Type">
+                  <<option value="sine">Sine</option>
+                  <<option value="square">Square</option>
+                  <<option value="triangle">Triangle</option>
+                  <<option value="sawtooth">Sawtooth</option>
+                </select>
+              </div>
             </div>
+          </div>
 
-            <div class="octave-container">
-              <h3>Octave</h3>
-              <select id="octave">
-                <<option value="-3">-3</option>
-                <<option value="-2">-2</option>
-                <<option value="-1">-1</option>
-                <<option selected="selected" value="0">0</option>
-                <<option value="1">1</option>
-                <<option value="2">2</option>
-                <<option value="3">3</option>
-              </select>
-            </div>
+          <div class="flanger-tremolo-controls-container">
 
             <div class="flanger-container">
               <h3>Flanger</h3>
@@ -79,40 +76,66 @@
               <input id="mix" type='range' min="0" max="100" value="0"/>
             </div>
 
-            <div class="lowpass-container">
-              <label for="lowpass">Lowpass Filter</lable>
-
-              <label for="frequency">Frequency</label>
-                <input id="frequency" type="range" min="0" max="22050" value="200"/>
-            </div>
-
             <div class="tremelo-container">
-              <label for="tremolo">Tremelo</label>
-              <label for="">Intensity</label>
-              <input id="intensity" type="range" min="0" max="100" value="30">
-
+              <h3>Tremolo</h3>
+              <label for="speed">Speed</label>
+              <input id="speed" type="range" min="0" max="20" value="0">
+              <label for="depth">Depth</label>
+              <input id="depth" type="range" min="0" max="50" value="0">
+              <label for="mix">Mix</label>
+              <input id="mix" type="range" min="0" max="100" value="0">
             </div>
 
-            <div class="pitch-container">
-              <label for="pitch">Pitch</label>
-              <input id="pitch" type="range" min="-100" max="100" value="0">
+            <div class="attack-volume-container">
+              <div class="pitch-container">
+                <label for="pitch">Pitch</label>
+                <input id="pitch" type="range" min="-100" max="100" value="0">
+              </div>
+
+              <div class="attack-container">
+                <label for="attack">Attack</label>
+                <input type="range" id="attack" min="0" max="10" value="0.04"/>
+              </div>
             </div>
 
+            <div class="volume-container">
+              <h3>Volume</h3>
+              <input type="range" min="0" max="100" value="50" class="range blue"/>
+            </div>
 
-              <ul class="set">
-                <li id="keyA" class="white f">A</li>
-                <li id="keyW" class="black fs">W</li>
-                <li id="keyS" class="white g">S</li>
-                <li id="keyE" class="black gs">E</li>
-                <li id="keyD" class="white a">D</li>
-                <li id="keyR" class="black as">R</li>
-                <li id="keyF" class="white b">F</li>
-                <li id="keyG" class="white c">G</li>
-                	<li id="keyY" class="black cs">Y</li>
-              	  <li id="keyH" class="white d">H</li>
-              	  <li id="keyU" class="black ds">U</li>
-              	  <li id="keyJ" class="white e">J</li>
-              </ul>
+          </div>
+
+              <div class="octave-keyboard-container">
+                <div class="octave-container">
+                  <h3>Octave</h3>
+                  <select id="octave">
+                    <<option value="-3">-3</option>
+                    <<option value="-2">-2</option>
+                    <<option value="-1">-1</option>
+                    <<option selected="selected" value="0">0</option>
+                    <<option value="1">1</option>
+                    <<option value="2">2</option>
+                    <<option value="3">3</option>
+                  </select>
+                </div>
+
+                    <ul class="set">
+                      <li id="keyA" class="white f">A</li>
+                      <li id="keyW" class="black fs">W</li>
+                      <li id="keyS" class="white g">S</li>
+                      <li id="keyE" class="black gs">E</li>
+                      <li id="keyD" class="white a">D</li>
+                      <li id="keyR" class="black as">R</li>
+                      <li id="keyF" class="white b">F</li>
+                      <li id="keyG" class="white c">G</li>
+                        <li id="keyY" class="black cs">Y</li>
+                        <li id="keyH" class="white d">H</li>
+                        <li id="keyU" class="black ds">U</li>
+                        <li id="keyJ" class="white e">J</li>
+                    </ul>
+
+
+              </div>
 
             </div>
         </div>

@@ -9,11 +9,14 @@ $(document).ready(function(){
   let originalFreq = {};
   let originalFreq2 = {};
   let currentEffects = {};
+  let lowPassFilter;
+  let highPassFilter;
 
   let tuna = new Tuna(context);
   let masterGain = context.createGain();
   let delay;
   let flanger;
+  let tremelo;
 
 
   $(".delay-time-container #slider").roundSlider({
@@ -33,6 +36,21 @@ $(document).ready(function(){
     radius: 40,
     max:100 // 0 to 1
   });
+
+const applyTremelo = (sound) => {
+  let speed = $('.tremelo-container #speed')[0].value;
+  let depth = $('.tremelo-container #depth')[0].value / 100;
+  let mix = $('.tremelo-container #mix')[0].value / 100;
+
+  tremolo = new Pizzicato.Effects.Tremolo({
+    speed: speed,
+    depth: 1,
+    mix: mix
+  });
+
+  sound.effects.splice(2, 1);
+  sound.addEffect(tremolo);
+}
 
 const applyFlanger = (sound) => {
   let time = $('.flanger-container #time')[0].value / 100;
@@ -72,6 +90,11 @@ const applyOctave = (sound) => {
   sound.frequency = newFrequency;
 }
 
+const applyAttack = (sound) => {
+  let val = parseInt($('.attack-container #attack')[0].value);
+  sound.attack = val;
+}
+
 // const updateFlanger = () => {
 //   let sounds = Object.values(playedSounds);
 //   let sounds2 = Object.values(playedSounds2);
@@ -99,6 +122,20 @@ const updatePitch = () => {
   })
 }
 
+const updateVolume = () => {
+  let val = $('.volume-container input')[0].value / 100;
+  let notes = Object.keys(playedSounds);
+  let notes2 = Object.keys(playedSounds2);
+  console.log(val);
+  notes.forEach((note) => {
+    playedSounds[note].volume = val;
+  })
+
+  notes2.forEach((note2) => {
+    playedSounds2[note2].volume = val;
+  })
+}
+
 
 // const updateDelay = () => {
 //
@@ -116,7 +153,9 @@ const updatePitch = () => {
 
 // $(".delay-container #slider").change(updateDelay);
 // $(".flanger-container input").on("input", updateFlanger);
+
 $(".pitch-container #pitch").on("input", updatePitch);
+$(".volume-container input").on("input", updateVolume);
 
   let keyA = document.getElementById('keyA');
   let $keyA = $(keyA);
@@ -199,8 +238,17 @@ $(".pitch-container #pitch").on("input", updatePitch);
     applyFlanger(sound);
     applyFlanger(sound2);
 
+    applyTremelo(sound);
+    applyTremelo(sound2);
+
     applyOctave(sound);
     applyOctave(sound2);
+
+    applyAttack(sound);
+    applyAttack(sound2);
+
+    sound.volume = $('.volume-container input')[0].value / 100;
+    sound.volume = $('.volume-container input')[0].value / 100;
 
     sound.play();
     sound2.play();
@@ -211,6 +259,8 @@ $(".pitch-container #pitch").on("input", updatePitch);
 
     playedSounds[note].stop();
     playedSounds2[note].stop();
+    playedSounds[note].disconnect();
+    playedSounds2[note].disconnect();
   }
 
   $(window).bind('keypress', (e) => {
