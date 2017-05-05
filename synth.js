@@ -6,8 +6,10 @@ $(document).ready(function(){
   let notes = {};
   let playedSounds = {};
   let playedSounds2 = {};
+  let playedSounds3 = {};
   let originalFreq = {};
   let originalFreq2 = {};
+  let originalFreq3 = {};
   let currentEffects = {};
   let lowPassFilter;
   let highPassFilter;
@@ -112,6 +114,7 @@ const updatePitch = () => {
   let adjustVal = $('.pitch-container #pitch')[0].value / 100;
   let notes = Object.keys(playedSounds);
   let notes2 = Object.keys(playedSounds2);
+  let notes3 = Object.keys(playedSounds3);
 
   notes.forEach((note) => {
     playedSounds[note].frequency = originalFreq[note] * (adjustVal + 1);
@@ -120,12 +123,18 @@ const updatePitch = () => {
   notes2.forEach((note2) => {
     playedSounds2[note2].frequency = originalFreq2[note2] * (adjustVal + 1);
   })
+
+  notes3.forEach((note3) => {
+    playedSounds3[note3].frequency = originalFreq3[note3] * (adjustVal + 1);
+  })
 }
 
 const updateVolume = () => {
   let val = $('.volume-container input')[0].value / 100;
   let notes = Object.keys(playedSounds);
   let notes2 = Object.keys(playedSounds2);
+  let notes3 = Object.keys(playedSounds3);
+
   console.log(val);
   notes.forEach((note) => {
     playedSounds[note].volume = val;
@@ -133,6 +142,10 @@ const updateVolume = () => {
 
   notes2.forEach((note2) => {
     playedSounds2[note2].volume = val;
+  })
+
+  notes3.forEach((note3) => {
+    playedSounds3[note3].volume = val;
   })
 }
 
@@ -226,32 +239,50 @@ $(".volume-container input").on("input", updateVolume);
       }
     });
 
+    let oscillator3Type = $("#oscillator3Type").val();
+    let sound3 = new Pizzicato.Sound({
+      source: 'wave',
+      options: {
+        type: oscillator3Type,
+        frequency: frequency
+      }
+    });
+
     playedSounds[note] = sound;
     playedSounds2[note] = sound2;
+    playedSounds3[note] = sound3;
 
     originalFreq[note] = sound.frequency;
     originalFreq2[note] = sound2.frequency;
+    originalFreq3[note] = sound3.frequency;
 
     applyDelay(sound);
     applyDelay(sound2);
+    applyDelay(sound3);
 
     applyFlanger(sound);
     applyFlanger(sound2);
+    applyFlanger(sound3);
 
     applyTremelo(sound);
     applyTremelo(sound2);
+    applyTremelo(sound3);
 
     applyOctave(sound);
     applyOctave(sound2);
+    applyOctave(sound3);
 
     applyAttack(sound);
     applyAttack(sound2);
+    applyAttack(sound3);
 
     sound.volume = $('.volume-container input')[0].value / 100;
-    sound.volume = $('.volume-container input')[0].value / 100;
+    sound2.volume = $('.volume-container input')[0].value / 100;
+    sound3.volume = $('.volume-container input')[0].value / 100;
 
     sound.play();
     sound2.play();
+    sound3.play();
   }
 
   const keyUp = (note, frequency) => {
@@ -259,8 +290,10 @@ $(".volume-container input").on("input", updateVolume);
 
     playedSounds[note].stop();
     playedSounds2[note].stop();
+    playedSounds3[note].stop();
     playedSounds[note].disconnect();
     playedSounds2[note].disconnect();
+    playedSounds3[note].disconnect();
   }
 
   $(window).bind('keypress', (e) => {
