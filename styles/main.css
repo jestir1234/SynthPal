@@ -372,7 +372,7 @@ input[type=range]::-moz-range-thumb:active {
   box-shadow: 0 0 100px rgba(0,0,0,0.5) inset, 0 1px rgba(212,152,125,0.2) inset, 0 5px 15px rgba(0,0,0,0.5);
 }
 
-.attack-volume-container{
+.attack-pitch-container{
   display:flex;
   flex-direction: column;
   justify-content: space-around;
@@ -633,7 +633,7 @@ p a:hover {
 
 .up-btn-container{
   height: 30px;
-  border-radius: .5em;
+  border-radius: .2em;
   margin-top: 5px;
   margin-bottom: 5px;
   width: 60px;
@@ -646,7 +646,7 @@ p a:hover {
 
 .down-btn-container{
   height: 30px;
-  border-radius: .5em;
+  border-radius: .2em;
   margin-top: 5px;
   margin-bottom: 5px;
   width: 60px;

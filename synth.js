@@ -154,6 +154,7 @@ const updateVolume = () => {
   let notes2 = Object.keys(playedSounds2);
   let notes3 = Object.keys(playedSounds3);
 
+  console.log(val);
   notes.forEach((note) => {
     playedSounds[note].volume = val;
   })
