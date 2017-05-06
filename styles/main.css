@@ -23,6 +23,10 @@ label{
 .synth-container{
   display:flex;
   flex-wrap: wrap;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;    
 }
 
 .synth-container:hover{
@@ -164,6 +168,7 @@ label{
 
 .delay-container #slider .rs-block .rs-inner{
   background:-webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url('http://inspiredgolfing.com/wp-content/uploads/2013/01/brushed-metal-background-3-1024x949.jpg');
+    box-shadow: 0 0 110px rgba(0,0,0,0.6) inset, 0 1px rgba(212,152,125,0.2) inset, 0 5px 15px rgba(0,0,0,0.5);
 }
 
 h1{
@@ -341,6 +346,9 @@ input[type=range]::-moz-range-thumb:active {
 
 .volume-container{
   /*border: 1px solid green;*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .delay-oscillators-container{
@@ -756,4 +764,54 @@ p a:hover {
 
 .osc1-display{
 
+}
+
+
+
+.volume-container #slider .rs-handle  {
+    background-color: transparent;
+    border: 8px solid transparent;
+    border-right-color: #222;
+    margin: -6px 0px 0px 14px !important;
+    border-width: 6px 25px 6px 4px;
+    background:linear-gradient(45deg, #222 0%,#555 100%);
+}
+.volume-container #slider .rs-handle:before  {
+    display: block;
+    content: " ";
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    background: black;
+    right: -11px;
+    bottom: -11px;
+    border-radius: 100px;
+    background:linear-gradient(45deg, #222 0%,#555 100%);
+}
+.volume-container #slider .rs-tooltip  {
+    top: 75%;
+    font-size: 11px;
+}
+.volume-container #slider .rs-tooltip div  {
+    text-align: center;
+    background: orange;
+    color: white;
+    border-radius: 4px;
+    padding: 1px 5px 2px;
+    margin-top: 4px;
+}
+.volume-container #slider .rs-range-color  {
+    background-color: #DB5959;
+}
+.volume-container #slider .rs-path-color  {
+    background-color: #F0C5C5;
+}
+
+.volume-container .rs-block .rs-inner{
+  background: -webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url(https://i.stack.imgur.com/MtKUX.jpg);
+  box-shadow: 0 0 100px rgba(0,0,0,0.5) inset, 0 1px rgba(212,152,125,0.2) inset, 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.volume-container .rs-block{
+  background: -webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url(http://www.pixeden.com/media/k2/galleries/220/003-wood-melamine-subttle-pattern-background-pat.jpg);
 }

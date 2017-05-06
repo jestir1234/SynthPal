@@ -12,9 +12,9 @@ $(document).ready(function(){
   let originalFreq3 = {};
   let currentEffects = {};
   let currentOctave = 0;
-  let osc1Array = ["sine", "square", "triangle", "s-tooth"];
-  let osc2Array = ["sine", "square", "triangle", "s-tooth"];
-  let osc3Array = ["sine", "square", "triangle", "s-tooth"];
+  let osc1Array = ["sine", "square", "triangle", "sawtooth"];
+  let osc2Array = ["sine", "square", "triangle", "sawtooth"];
+  let osc3Array = ["sine", "square", "triangle", "sawtooth"];
 
   let masterGain = context.createGain();
   let delay;
@@ -57,6 +57,17 @@ $(document).ready(function(){
     width:10,
     radius: 40,
     max:100 // 0 to 1
+  });
+
+  $(".volume-container #slider").roundSlider({
+   radius: 60,
+   width: 16,
+   value: 37,
+   handleSize: 0,
+   handleShape: "square",
+   max: 100,
+   value: 50,
+   min: 0
   });
 
 const setOscDisplays = () => {
@@ -146,10 +157,17 @@ const applyDelay = (sound) => {
   delay = new Pizzicato.Effects.Delay({
     feedback: feedback,
     time: delayTime,
-    mix: mix
+    mix: mix,
   });
-  currentEffects["delay"] = delay;
-  sound.effects.shift();
+
+  sound.effects.forEach((effect) => {
+    console.log(effect)
+    console.log(delay)
+    if (effect === delay){
+
+    }
+  });
+  sound.effects.splice(0, 1);
   sound.addEffect(delay);
 }
 
@@ -197,12 +215,12 @@ const updatePitch = () => {
 }
 
 const updateVolume = () => {
-  let val = $('.volume-container input')[0].value / 100;
+  let val = $('.volume-container #slider').data('roundSlider').option("value") / 100;
+
   let notes = Object.keys(playedSounds);
   let notes2 = Object.keys(playedSounds2);
   let notes3 = Object.keys(playedSounds3);
 
-  console.log(val);
   notes.forEach((note) => {
     playedSounds[note].volume = val;
   })
@@ -218,9 +236,10 @@ const updateVolume = () => {
 
 
 // const updateDelay = () => {
-//
+//   console.log("updating delay")
 //   let sounds = Object.values(playedSounds);
 //   let sounds2 = Object.values(playedSounds2);
+//   let sounds3 = Object.values(playedSounds3);
 //
 //   sounds.forEach((sound) => {
 //     applyDelay(sound)
@@ -229,13 +248,19 @@ const updateVolume = () => {
 //   sounds2.forEach((sound2) => {
 //     applyDelay(sound2)
 //   });
+//
+//   sounds3.forEach((sound3) => {
+//     applyDelay(sound3)
+//   });
 // }
 
-// $(".delay-container #slider").change(updateDelay);
+// $(".delay-container #slider").on("click", updateDelay);
 // $(".flanger-container input").on("input", updateFlanger);
 
 $(".pitch-container #pitch").on("input", updatePitch);
-$(".volume-container input").on("input", updateVolume);
+$('.volume-container').on("mouseover", updateVolume)
+
+
 
   let keyA = document.getElementById('keyA');
   let $keyA = $(keyA);
@@ -343,9 +368,9 @@ $(".volume-container input").on("input", updateVolume);
     applyAttack(sound2);
     applyAttack(sound3);
 
-    sound.volume = $('.volume-container input')[0].value / 100;
-    sound2.volume = $('.volume-container input')[0].value / 100;
-    sound3.volume = $('.volume-container input')[0].value / 100;
+    sound.volume = $('.volume-container #slider').data('roundSlider').option("value") / 100;
+    sound2.volume = $('.volume-container #slider').data('roundSlider').option("value") / 100;
+    sound3.volume = $('.volume-container #slider').data('roundSlider').option("value") / 100;
 
     sound.play();
     sound2.play();
