@@ -1,5 +1,6 @@
 h3 {
   color:white;
+  letter-spacing: 2px;
 }
 
 h1 {
@@ -178,6 +179,7 @@ h1{
 
 h2{
   color:white;
+  letter-spacing: 2px;
 }
 
 .delay-btns-container{
@@ -248,6 +250,7 @@ padding: 10;
 padding: 10px;
 box-shadow: 0 0 50px rgba(0,0,0,0.5) inset, 0 1px rgba(212,152,125,0.2) inset, 0 5px 15px rgba(0,0,0,0.5);
 }
+
 
 .tremelo-container *{
   margin-top: 7px;
