@@ -4,7 +4,7 @@
 
 Synth-pal is a browser-based keyboard synthesizer featuring eight keys with different pitches, an oscillator, and filter control to enable sound modification. User's will be able to control the notes of the sound through the following inputs: "A", "W", "S", "E", "D", "R", "F", "T".
 
-[Live](https://mattnguyen.win/SynthPal/)
+[Live](http://mattnguyen.win/SynthPal/)
 
 ### Functionality & MVP
 
