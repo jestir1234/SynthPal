@@ -844,3 +844,31 @@ p a:hover {
 .volume-container:hover{
   cursor: pointer;
 }
+
+#github-logo{
+  margin-top: 100px;
+  width: 60px;
+  height: 60px;
+}
+
+#linkedin-logo{
+  margin-top: 100px;
+  width: 60px;
+  height:60px;
+}
+
+#portfolio-logo{
+  margin-top: 100px;
+  width: 60px;
+  height:60px;
+}
+
+.logos-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logos-container * {
+  padding: 40px;
+}
