@@ -1,4 +1,4 @@
-## JS Project Proposal: Synth-pal
+# Synth-pal
 
 ### Background
 
