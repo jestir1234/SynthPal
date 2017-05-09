@@ -15,7 +15,7 @@ $(document).ready(function(){
   let osc1Array = ["sine", "square", "triangle", "sawtooth"];
   let osc2Array = ["sine", "square", "triangle", "sawtooth"];
   let osc3Array = ["sine", "square", "triangle", "sawtooth"];
-  let presets = ["DEFAULT", "MARTIAN", "CYBER CHURCH", "8-BIT JAMS", "VENTILLATOR"];
+  let presets = ["DEFAULT", "MARTIAN", "CYBER CHURCH", "8-BIT JAMS", "VENTILLATOR", "DARK PACT", "EVIL STAIRS"];
 
   let masterGain = context.createGain();
   let delay;
@@ -122,12 +122,24 @@ const resetOscillators = () => {
   autoChangeOscillators("sine", "sine", "sine");
 }
 
-const resetOctave = (value) => {
-  debugger
-  while (currentOctave !== value) {
+const resetOctave = () => {
+
+  while (currentOctave !== 0) {
     if (currentOctave > 0) {
       changeCurrentOctave(-1);
     } else {
+      changeCurrentOctave(1);
+    }
+  }
+}
+
+const autoChangeOctave = (value) => {
+  if (currentOctave >= 0){
+    while (currentOctave !== value){
+      changeCurrentOctave(-1);
+    }
+  } else {
+    while (currentOctave !== value){
       changeCurrentOctave(1);
     }
   }
@@ -253,6 +265,30 @@ const autoChangeOscillators = (osc1, osc2, osc3) => {
   }
 }
 
+applyEvilStairs = () => {
+  applyDefault();
+  $('.tremelo-container #depth')[0].value = 8;
+  $('.attack-container #attack')[0].value = 1;
+
+  autoChangeOscillators("sawtooth", "sawtooth", "sawtooth");
+  autoChangeOctave(-2);
+}
+
+const applyDarkPact = () => {
+  applyDefault();
+  $('.flanger-container #time')[0].value = 14;
+  $('.flanger-container #speed')[0].value = 21;
+  $('.flanger-container #depth')[0].value = 24;
+  $('.flanger-container #mix')[0].value = 30;
+
+  $('.tremelo-container #speed')[0].value = 35;
+  $('.tremelo-container #depth')[0].value = 8;
+  $('.tremelo-container #mix')[0].value = 12;
+  $('.attack-container #attack')[0].value = 2;
+  autoChangeOscillators("triangle", "triangle", "sine");
+  autoChangeOctave(-1);
+}
+
 const applyVentillator = () => {
   applyDefault();
   autoChangeOscillators("sine", "square", "sawtooth");
@@ -260,11 +296,12 @@ const applyVentillator = () => {
   $('.flanger-container #speed')[0].value = 27;
   $('.flanger-container #depth')[0].value = 40;
   $('.flanger-container #mix')[0].value = 90;
-  resetOctave(-3);
+  autoChangeOctave(-3);
 }
 
 const apply8BitJams = () => {
   applyDefault();
+  autoChangeOctave(-1);
   autoChangeOscillators("triangle", "square", "sine");
 }
 
@@ -279,6 +316,7 @@ const applyCyberChurch = () => {
   $('.tremelo-container #depth')[0].value = 18;
   $('.tremelo-container #mix')[0].value = 40;
 
+  autoChangeOctave(-3);
   autoChangeOscillators("sine", "sawtooth", "sine")
 }
 
@@ -312,6 +350,10 @@ const changePresets = (setting) => {
     apply8BitJams();
   } else if (setting === "VENTILLATOR"){
     applyVentillator();
+  } else if (setting === "DARK PACT"){
+    applyDarkPact();
+  } else if (setting === "EVIL STAIRS"){
+    applyEvilStairs();
   }
 }
 
