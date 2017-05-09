@@ -925,3 +925,9 @@ p a:hover {
 .instructions-container{
   padding-left: 110px;
 }
+
+.instructions-container img{
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+}
