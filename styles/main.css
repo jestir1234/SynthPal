@@ -17,7 +17,6 @@ label{
 }
 
 .container {
-  margin: auto;
   width: 800px;
 }
 
@@ -49,6 +48,8 @@ body{
   background: #222;
   font-family: 'Orbitron', sans-serif;
   color:white;
+  display:flex;
+  justify-content: space-around;
 }
 
 ul {
@@ -399,6 +400,8 @@ input[type=range]::-moz-range-thumb:active {
   border-radius: 2em;
   background: -webkit-gradient(linear, right bottom, left top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))), url(https://i.stack.imgur.com/MtKUX.jpg);
   box-shadow: 0 0 100px rgba(0,0,0,0.5) inset, 0 1px rgba(212,152,125,0.2) inset, 0 5px 15px rgba(0,0,0,0.5);
+  margin: 20px;
+  margin-top: 40px;
 }
 
 .attack-pitch-container{
@@ -420,6 +423,8 @@ input[type=range]::-moz-range-thumb:active {
 .title-container{
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .oscillators{
@@ -846,7 +851,6 @@ p a:hover {
 }
 
 #github-logo{
-  margin-top: 100px;
   width: 60px;
   height: 60px;
 }
@@ -856,7 +860,6 @@ p a:hover {
 }
 
 #linkedin-logo{
-  margin-top: 100px;
   width: 60px;
   height:60px;
 }
@@ -870,19 +873,20 @@ p a:hover {
 }
 
 #portfolio-logo{
-  margin-top: 100px;
   width: 60px;
   height:60px;
 }
 
 .logos-container{
   display:flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .logos-container * {
-  padding: 40px;
+  margin: 40px;
+}
+
+.logos-container a {
+
 }
 
 .presets-container{
@@ -910,4 +914,14 @@ p a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.instructions-container p {
+  font-size: 16px;
+  font-family: 'Inconsolata', monospace;
+  text-align: left;
+}
+
+.instructions-container{
+  padding-left: 110px;
 }
