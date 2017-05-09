@@ -15,19 +15,19 @@ $(document).ready(function(){
   let osc1Array = ["sine", "square", "triangle", "sawtooth"];
   let osc2Array = ["sine", "square", "triangle", "sawtooth"];
   let osc3Array = ["sine", "square", "triangle", "sawtooth"];
+  let presets = ["DEFAULT", "MARTIAN", "CYBER CHURCH", "8-BIT JAMS", "VENTILLATOR"];
 
   let masterGain = context.createGain();
   let delay;
   let flanger;
   let tremelo;
 
-  let octaveUp = $('.up-btn-container');
-  let octaveDown = $('.down-btn-container');
+  let octaveUp = $('.octave-controls .up-btn-container');
+  let octaveDown = $('.octave-controls .down-btn-container');
   let octaveDisplay = $('.octave-display-container')[0];
 
   octaveUp.on("click", () => changeCurrentOctave(1));
   octaveDown.on("click", () => changeCurrentOctave(-1));
-
 
   const changeCurrentOctave = (value) => {
 
@@ -117,6 +117,22 @@ $('.oscillator3-container .arrow-down').on("click", (e) => {
   osc3Array.unshift(last);
   setOscDisplays();
 });
+
+const resetOscillators = () => {
+  autoChangeOscillators("sine", "sine", "sine");
+}
+
+const resetOctave = (value) => {
+  debugger
+  while (currentOctave !== value) {
+    if (currentOctave > 0) {
+      changeCurrentOctave(-1);
+    } else {
+      changeCurrentOctave(1);
+    }
+  }
+}
+
 const applyTremelo = (sound) => {
   let speed = $('.tremelo-container #speed')[0].value;
   let depth = $('.tremelo-container #depth')[0].value / 100;
@@ -130,6 +146,20 @@ const applyTremelo = (sound) => {
 
   sound.effects.splice(2, 1);
   sound.addEffect(tremolo);
+}
+
+const resetPitch = () => {
+  $('.pitch-container #pitch')[0].value = 0;
+}
+
+const resetAttack = () => {
+  $('.attack-container #attack')[0].value = 0;
+}
+
+const resetTremolo = () => {
+  $('.tremelo-container #speed')[0].value = 0;
+  $('.tremelo-container #depth')[0].value = 0;
+  $('.tremelo-container #mix')[0].value = 0;
 }
 
 const applyFlanger = (sound) => {
@@ -147,6 +177,13 @@ const applyFlanger = (sound) => {
   })
   sound.effects.splice(1, 1);
   sound.addEffect(flanger);
+}
+
+const resetFlanger = () => {
+  $('.flanger-container #time')[0].value = 0;
+  $('.flanger-container #speed')[0].value = 0;
+  $('.flanger-container #depth')[0].value = 0;
+  $('.flanger-container #mix')[0].value = 0;
 }
 
 const applyDelay = (sound) => {
@@ -171,6 +208,12 @@ const applyDelay = (sound) => {
   sound.addEffect(delay);
 }
 
+const resetDelay = () => {
+  $('.delay-time-container #slider').data('roundSlider').option("value", 0);
+  $('.delay-feedback-container #slider').data('roundSlider').option("value", 0);
+  $('.delay-mix-container #slider').data('roundSlider').option("value", 0);
+}
+
 const applyOctave = (sound) => {
   let val = currentOctave;
   newFrequency = calcOctave(sound.frequency, val);
@@ -182,18 +225,95 @@ const applyAttack = (sound) => {
   sound.attack = val;
 }
 
-// const updateFlanger = () => {
-//   let sounds = Object.values(playedSounds);
-//   let sounds2 = Object.values(playedSounds2);
-//
-//   sounds.forEach((sound) => {
-//     applyFlanger(sound)
-//   });
-//
-//   sounds2.forEach((sound2) => {
-//     applyFlanger(sound2)
-//   });
-// }
+const rotatePresets = (direction) => {
+  return (e) => {
+    if (direction === "up"){
+      let first = presets[0];
+      presets.shift();
+      presets.push(first);
+    } else if (direction === "down"){
+      let last = presets[presets.length - 1];
+      presets.unshift(last);
+      presets.pop();
+    }
+      changePresets(presets[0]);
+  }
+}
+
+const autoChangeOscillators = (osc1, osc2, osc3) => {
+
+  while (osc1Array[0] !== osc1){
+    $('.oscillator1-container .arrow-up')[0].click();
+  }
+  while (osc2Array[0] !== osc2){
+    $('.oscillator2-container .arrow-up')[0].click();
+  }
+  while (osc3Array[0] !== osc3){
+    $('.oscillator3-container .arrow-up')[0].click();
+  }
+}
+
+const applyVentillator = () => {
+  applyDefault();
+  autoChangeOscillators("sine", "square", "sawtooth");
+  $('.flanger-container #time')[0].value = 18;
+  $('.flanger-container #speed')[0].value = 27;
+  $('.flanger-container #depth')[0].value = 40;
+  $('.flanger-container #mix')[0].value = 90;
+  resetOctave(-3);
+}
+
+const apply8BitJams = () => {
+  applyDefault();
+  autoChangeOscillators("triangle", "square", "sine");
+}
+
+const applyCyberChurch = () => {
+  applyDefault();
+  $('.flanger-container #time')[0].value = 40;
+  $('.flanger-container #speed')[0].value = 30;
+  $('.flanger-container #depth')[0].value = 35;
+  $('.flanger-container #mix')[0].value = 28;
+
+  $('.tremelo-container #speed')[0].value = 50;
+  $('.tremelo-container #depth')[0].value = 18;
+  $('.tremelo-container #mix')[0].value = 40;
+
+  autoChangeOscillators("sine", "sawtooth", "sine")
+}
+
+const applyMartian = () => {
+  applyDefault();
+  $('.flanger-container #time')[0].value = 60;
+  $('.flanger-container #speed')[0].value = 75;
+  $('.flanger-container #depth')[0].value = 80;
+  $('.flanger-container #mix')[0].value = 65;
+}
+
+const applyDefault = () => {
+  resetDelay();
+  resetFlanger();
+  resetTremolo();
+  resetOscillators();
+  resetAttack();
+  resetPitch();
+  resetOctave(0);
+}
+
+const changePresets = (setting) => {
+  $(".presets-display-container")[0].innerHTML = presets[0];
+  if (setting === "DEFAULT"){
+    applyDefault();
+  } else if (setting === "MARTIAN"){
+    applyMartian();
+  } else if (setting === "CYBER CHURCH"){
+    applyCyberChurch();
+  } else if (setting === "8-BIT JAMS"){
+    apply8BitJams();
+  } else if (setting === "VENTILLATOR"){
+    applyVentillator();
+  }
+}
 
 const updatePitch = () => {
   let adjustVal = $('.pitch-container #pitch')[0].value / 100;
@@ -235,30 +355,12 @@ const updateVolume = () => {
 }
 
 
-// const updateDelay = () => {
-//   console.log("updating delay")
-//   let sounds = Object.values(playedSounds);
-//   let sounds2 = Object.values(playedSounds2);
-//   let sounds3 = Object.values(playedSounds3);
-//
-//   sounds.forEach((sound) => {
-//     applyDelay(sound)
-//   });
-//
-//   sounds2.forEach((sound2) => {
-//     applyDelay(sound2)
-//   });
-//
-//   sounds3.forEach((sound3) => {
-//     applyDelay(sound3)
-//   });
-// }
-
-// $(".delay-container #slider").on("click", updateDelay);
-// $(".flanger-container input").on("input", updateFlanger);
 
 $(".pitch-container #pitch").on("input", updatePitch);
-$('.volume-container').on("mouseover", updateVolume)
+$('.volume-container').on("mouseover", updateVolume);
+$('.presets-container .up-btn-container').on("click", rotatePresets("up"));
+$('.presets-container .down-btn-container').on("click", rotatePresets("down"));
+$('.presets-display-container')[0].innerHTML = presets[0];
 
 
 
