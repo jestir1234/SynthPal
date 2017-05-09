@@ -851,10 +851,22 @@ p a:hover {
   height: 60px;
 }
 
+#github-logo:hover{
+  transform: scale(1.2);
+}
+
 #linkedin-logo{
   margin-top: 100px;
   width: 60px;
   height:60px;
+}
+
+#linkedin-logo:hover{
+  transform: scale(1.2);
+}
+
+#portfolio-logo:hover{
+  transform: scale(1.2);
 }
 
 #portfolio-logo{
